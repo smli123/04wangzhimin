@@ -19,7 +19,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.xiaoyu.communication2.BTChatActivity"
+            android:name="com.xiaoyu.communication2.BTLightActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +31,12 @@
         
         <activity
             android:name="com.xiaoyu.communication2.BTDeviceActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.xiaoyu.communication2.BTChatActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
             android:label="@string/app_name" >
         </activity>
         

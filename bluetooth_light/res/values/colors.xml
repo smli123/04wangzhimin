@@ -26,8 +26,20 @@
     
     <color name="commom_bg_color">#ebebeb</color>
     
-    
     <!-- 联系人详情界面职位字体颜色 -->
     <color name="person_company_color">#ababab</color>
+    
+    <color name="color_01">#ff0000</color>
+    <color name="color_02">#966314</color>
+    <color name="color_03">#0074E1</color>
+    <color name="color_04">#966314</color>
+    <color name="color_05">#FF5252</color>
+    <color name="color_06">#FFFFFF</color>
+    <color name="color_07">#FFCDD2</color>
+    <color name="color_08">#FFC107</color>
+    <color name="color_09">#3F51B5</color>
+    <color name="color_10">#00BCD4</color>
+    <color name="color_11">#388E3C</color>
+    <color name="color_12">#C8E6C9</color>
     
 </resources>

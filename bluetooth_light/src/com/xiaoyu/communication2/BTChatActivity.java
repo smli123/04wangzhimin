@@ -51,8 +51,8 @@ public class BTChatActivity extends Activity {
 	private Handler detectedHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			msgList.add(msg.obj.toString());  
-			 mAdapter.notifyDataSetChanged();  
-             mListView.setSelection(msgList.size() - 1);  
+			mAdapter.notifyDataSetChanged();  
+            mListView.setSelection(msgList.size() - 1);  
 		};
 	};
 	
@@ -136,7 +136,7 @@ public class BTChatActivity extends Activity {
                               detectedHandler.sendMessage(msg); 
                           }
                       }    
-                     editMsgView.setText("");  
+//                     editMsgView.setText("");  
 //                     editMsgView.clearFocus();  
 //                     //close InputMethodManager  
 //                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);   
@@ -148,7 +148,7 @@ public class BTChatActivity extends Activity {
          });  
            
          disconnectButton= (Button)findViewById(R.id.btn_disconnect);  
-         disconnectButton.setOnClickListener(new OnClickListener() {  
+         disconnectButton.setOnClickListener(new OnClickListener() {
              @Override  
              public void onClick(View arg0) {  
                  if (BluetoothMsg.serviceOrCilent == BluetoothMsg.ServerOrCilent.CILENT){  
