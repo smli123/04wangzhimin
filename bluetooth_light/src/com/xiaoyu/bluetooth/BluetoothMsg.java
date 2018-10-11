@@ -12,5 +12,5 @@ public class BluetoothMsg {
     //连接蓝牙地址  
     public static String BlueToothAddress = null,lastblueToothAddress=null;  
     //通信线程是否开启  
-    public static boolean isOpen = false; 
+    public static boolean isOpen = false;  
 }
