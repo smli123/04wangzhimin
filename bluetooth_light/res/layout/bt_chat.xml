@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+    	android:orientation="vertical">
+        
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please Choose Device Play" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+	    <RadioButton
+	        android:id="@+id/radioNone"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:checked="true"
+	        android:text="As None" />
+	
+	    <RadioButton
+	        android:id="@+id/radioClient"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="As Client" />
+	
+	    <RadioButton
+	        android:id="@+id/radioServer"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="As Server" />
+	</RadioGroup>
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_weight="1"
+        android:divider="#ffc6c6c6"
+        android:scrollingCache="false" >
+
+    </ListView>
+	</LinearLayout>
+	</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <Button
+            android:id="@+id/btn_disconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="断开" />
+
+        <Button
+            android:id="@+id/btn_msg_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="发送" />
+
+        <EditText
+            android:id="@+id/MessageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_msg_send"
+            android:layout_toRightOf="@+id/btn_disconnect"
+            android:layout_weight="10"
+            android:gravity="center_vertical"
+            android:hint="说点什么呢?"
+            android:text="TextView" />
+    
+    </RelativeLayout>
+</LinearLayout>
