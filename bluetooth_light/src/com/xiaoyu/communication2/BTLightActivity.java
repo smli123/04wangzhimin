@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -84,7 +85,14 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		initView();
 		
 		initViewShow();
-
+		
+//		updateUI();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		saveData();
 	}
 	
 	private void saveData() {
@@ -262,30 +270,69 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		if (requestCode == 100){
 			//从设备列表返回
 			initConnecter();
-		} else if (requestCode == 101){
+		} else {
+			 if (requestCode == 101){
+			 	str_color_info[0] = data.getStringExtra("DATA");
+			} else if (requestCode == 102){
+				str_color_info[1] = data.getStringExtra("DATA");
+			} else if (requestCode == 103){
+				str_color_info[2] = data.getStringExtra("DATA");
+			} else if (requestCode == 104){
+				str_color_info[3] = data.getStringExtra("DATA");
+			} else if (requestCode == 105){
+				str_color_info[4] = data.getStringExtra("DATA");
+			} else if (requestCode == 106){
+				str_color_info[5] = data.getStringExtra("DATA");
+			} else if (requestCode == 107){
+				str_color_info[6] = data.getStringExtra("DATA");
+			} else if (requestCode == 108){
+				str_color_info[7] = data.getStringExtra("DATA");
+			} else if (requestCode == 109){
+				str_color_info[8] = data.getStringExtra("DATA");
+			} else if (requestCode == 110){
+				str_color_info[9] = data.getStringExtra("DATA");
+			} else if (requestCode == 111){
+				str_color_info[10] = data.getStringExtra("DATA");
+			} else if (requestCode == 112){
+				str_color_info[11] = data.getStringExtra("DATA");
+			}
+			 
+			updateUI();
+		}
+	}
+	 
+	private void updateUI() {
+		setImageViewBackgroundColor(iv_color_01, str_color_info[0]);
+		setImageViewBackgroundColor(iv_color_02, str_color_info[1]);
+		setImageViewBackgroundColor(iv_color_03, str_color_info[2]);
+		setImageViewBackgroundColor(iv_color_04, str_color_info[3]);
+		setImageViewBackgroundColor(iv_color_05, str_color_info[4]);
+		setImageViewBackgroundColor(iv_color_06, str_color_info[5]);
+		setImageViewBackgroundColor(iv_color_07, str_color_info[6]);
+		setImageViewBackgroundColor(iv_color_08, str_color_info[7]);
+		setImageViewBackgroundColor(iv_color_09, str_color_info[8]);
+		setImageViewBackgroundColor(iv_color_10, str_color_info[9]);
+		setImageViewBackgroundColor(iv_color_11, str_color_info[10]);
+		setImageViewBackgroundColor(iv_color_12, str_color_info[11]);
+	}
+	
+	private void setImageViewBackgroundColor(ImageView iv_color, String str_color) {
+		String[] cmds = str_color.split(",");
+		if (cmds.length < 2)
+			return;
+		
+		int i_bluetooth_mode = Integer.valueOf(cmds[0]);
+		
+		if (cmds.length == 2) {
+			// do nothing...
+		} else {
+			int last = cmds.length - 1;
+			int color = Integer.valueOf(cmds[last], 16);
+			int red = Color.red(color);
+			int green = Color.green(color);
+			int blue = Color.blue(color);
 			
-		} else if (requestCode == 102){
-			
-		} else if (requestCode == 103){
-			
-		} else if (requestCode == 104){
-			
-		} else if (requestCode == 105){
-			
-		} else if (requestCode == 106){
-			
-		} else if (requestCode == 107){
-			
-		} else if (requestCode == 108){
-			
-		} else if (requestCode == 109){
-			
-		} else if (requestCode == 110){
-			
-		} else if (requestCode == 111){
-			
-		} else if (requestCode == 112){
-			
+			iv_color.setBackgroundColor(Color.rgb(red, green, blue));
 		}
 	}
 	 
@@ -347,6 +394,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class); 
 				it.putExtra("DATA", str_color_info[0]);
+				it.putExtra("NUM", 101);
                 startActivityForResult(it, 101);
 				return false;
 			}
@@ -364,6 +412,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[1]);
+				it.putExtra("NUM", 102);
                 startActivityForResult(it, 102);
 				return false;
 			}
@@ -381,6 +430,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);  
 				it.putExtra("DATA", str_color_info[2]);
+				it.putExtra("NUM", 103);
                 startActivityForResult(it, 103);
 				return false;
 			}
@@ -398,6 +448,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[3]);
+				it.putExtra("NUM", 104);
                 startActivityForResult(it, 104);
 				return false;
 			}
@@ -415,6 +466,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[4]);
+				it.putExtra("NUM", 105);
                 startActivityForResult(it, 105);
 				return false;
 			}
@@ -432,6 +484,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[5]);
+				it.putExtra("NUM", 106);
                 startActivityForResult(it, 106);
 				return false;
 			}
@@ -449,6 +502,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[6]);
+				it.putExtra("NUM", 107);
                 startActivityForResult(it, 107);
 				return false;
 			}
@@ -466,6 +520,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[7]);
+				it.putExtra("NUM", 108);
                 startActivityForResult(it, 108);
 				return false;
 			}
@@ -483,6 +538,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[8]);
+				it.putExtra("NUM", 109);
                 startActivityForResult(it, 109);
 				return false;
 			}
@@ -500,6 +556,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[9]);
+				it.putExtra("NUM", 110);
                 startActivityForResult(it, 110);
 				return false;
 			}
@@ -517,6 +574,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[10]);
+				it.putExtra("NUM", 111);
                 startActivityForResult(it, 111);
 				return false;
 			}
@@ -534,6 +592,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			public boolean onLongClick(View v) {
 				Intent it = new Intent(getApplicationContext(),BTColorSelectorActivity.class);
 				it.putExtra("DATA", str_color_info[11]);
+				it.putExtra("NUM", 112);
                 startActivityForResult(it, 112);
 				return false;
 			}

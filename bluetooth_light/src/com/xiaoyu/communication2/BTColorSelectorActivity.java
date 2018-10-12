@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,6 +56,8 @@ public class BTColorSelectorActivity  extends Activity
 	int value_green = 0;
 	int value_blue = 0;
 	
+	int result_return = 0;
+	
 	ArrayList<Integer> array_color_int = new ArrayList<Integer>();
 	ArrayList<String> array_color = new ArrayList<String>();
 	
@@ -72,8 +76,14 @@ public class BTColorSelectorActivity  extends Activity
 		// load Data from intent
 		Intent intent = getIntent();
 		str_color_info = intent.getStringExtra("DATA");
+		result_return = intent.getIntExtra("NUM", 0);
+		
+		// string to array_color_int, array_color
+		transInfo();
 		
 		initView();
+		
+		updateUI();
 	}
 	
 	@SuppressLint("ResourceAsColor") 
@@ -145,6 +155,10 @@ public class BTColorSelectorActivity  extends Activity
 		sb_green.setOnSeekBarChangeListener(this);
 		sb_blue.setOnSeekBarChangeListener(this);
 		
+		sb_red.setProgress(value_red);
+		sb_green.setProgress(value_green);
+		sb_blue.setProgress(value_blue);
+		
 		cp_colorpicker.setColorChangedListener(new ColorPickerView.OnColorChangedListener(){
 			@Override
 			public void onColorChanged(int color) {
@@ -161,11 +175,10 @@ public class BTColorSelectorActivity  extends Activity
 			    sb_blue.setProgress(value_blue);
 			    
 				updatePreview();
- 
 			}
 		});
 
-		
+		iv_bluetooth_mode.setBackgroundResource(i_bluetooth_mode == 0 ? R.drawable.smp_bluetooth_mode_01 : R.drawable.smp_bluetooth_mode_02);
 	}
 	
 
@@ -242,38 +255,102 @@ public class BTColorSelectorActivity  extends Activity
 			iv_bluetooth_mode.setBackgroundResource(i_bluetooth_mode == 0 ? R.drawable.smp_bluetooth_mode_01 : R.drawable.smp_bluetooth_mode_02);
 			break;
 		case R.id.iv_ok:
+			Intent intent = new Intent(); 
+			intent.putExtra("DATA", str_color_info);
+			setResult(result_return, intent);
+            finish();
 			break;
 		case R.id.iv_show:
 			array_color.clear();
 			genStringCommand();
+			updateUI();
 			break;
 		case R.id.iv_color_01:
-			
+			setImageViewBackgroundColor(iv_color_01);
 			break;
 		case R.id.iv_color_02:
+			setImageViewBackgroundColor(iv_color_02);
 			break;
 		case R.id.iv_color_03:
+			setImageViewBackgroundColor(iv_color_03);
 			break;
 		case R.id.iv_color_04:
+			setImageViewBackgroundColor(iv_color_04);
 			break;
 		case R.id.iv_color_05:
+			setImageViewBackgroundColor(iv_color_05);
 			break;
 		case R.id.iv_color_06:
+			setImageViewBackgroundColor(iv_color_06);
 			break;
 		case R.id.iv_color_07:
+			setImageViewBackgroundColor(iv_color_07);
 			break;
 		case R.id.iv_color_08:
+			setImageViewBackgroundColor(iv_color_08);
 			break;
 		case R.id.iv_preview:
 			array_color_int.add(Color.rgb(value_red, value_green, value_blue));
 			array_color.add(Integer.toHexString(value_red) + Integer.toHexString(value_green) + Integer.toHexString(value_blue));
 			genStringCommand();
+			updateUI();
 			break;
 		}
 	}
 	
-	private void genStringCommand() {
+	@SuppressLint("NewApi") 
+	private boolean setImageViewBackgroundColor(ImageView iv) {
+		Drawable background = iv.getBackground();
 		
+		// background 包括 color 和 Drawable, 这里分开取值
+        if (background instanceof ColorDrawable) {
+            ColorDrawable colordDrawable = (ColorDrawable) background;
+            int color = colordDrawable.getColor();
+            
+            value_red = Color.red(color);
+            value_green = Color.green(color);
+            value_blue = Color.blue(color);
+            
+            sb_red.setProgress(value_red);
+            sb_green.setProgress(value_green);
+            sb_blue.setProgress(value_blue);
+            
+            return true;
+        }
+        return false;
+	}
+
+	private void transInfo() {
+		array_color_int.clear();
+		array_color.clear();
+		
+		String[] cmds = str_color_info.split(",");
+		if (cmds.length < 2)
+			return;
+		
+		i_bluetooth_mode = Integer.valueOf(cmds[0]);
+		
+		if (cmds.length == 2) {
+			// do nothing...
+		} else {
+			int count = Integer.valueOf(cmds[1]);
+			for (int i = 2; i < count + 2; i++) {
+				int col = Integer.valueOf(cmds[i], 16);
+				
+				String value = Integer.toString(col, 16);
+				array_color.add(value);
+				array_color_int.add(col);
+				
+				if (i == count + 1) {
+					value_red = Color.red(col);
+					value_green = Color.green(col);
+					value_blue = Color.blue(col);
+				}
+			}
+		}
+	}
+	
+	private void genStringCommand() {
 		int count = array_color.size();
 		
 		String colors = "";
@@ -289,8 +366,6 @@ public class BTColorSelectorActivity  extends Activity
 		} else {
 			str_color_info = String.valueOf(i_bluetooth_mode) + "," + count + "," + colors;
 		}
-		
-		updateUI();
 	}
 
 }
