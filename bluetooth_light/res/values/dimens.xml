@@ -4,10 +4,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     
+    <dimen name="color_block_width_small">30dp</dimen>
+    <dimen name="color_block_height_small">30dp</dimen>
+    
     <dimen name="color_block_width">100dp</dimen>
     <dimen name="color_block_height">40dp</dimen>
     
     <dimen name="color_block_width_seperator">10dp</dimen>
     <dimen name="color_block_height_seperator">10dp</dimen>
+    
+    <dimen name="color_block_height_small_seperator">15dp</dimen>
 
 </resources>

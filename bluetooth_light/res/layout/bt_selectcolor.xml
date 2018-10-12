@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:id="@+id/rl_total"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:background="#5D4037">
+        
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#5D4037"
+            android:padding="5dp" >
+		    
+            <ImageView
+                android:id="@+id/iv_bluetooth_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/smp_bluetooth_mode_01" />
+
+            <ImageView
+                android:id="@+id/iv_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/smp_ok" />
+            
+            <ImageView
+                android:id="@+id/iv_show"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true" />
+            
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#5D4037"
+            android:padding="5dp" 
+            android:orientation="horizontal">
+            
+            <RelativeLayout
+	            android:id="@+id/rl_bottom_red"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="5dp"
+	            android:orientation="horizontal">
+                
+                <TextView
+                    android:id="@+id/tv_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:text="R:100"
+                    android:textColor="@color/red"
+                    android:textSize="15dp" />
+                <SeekBar
+				    android:id="@+id/sb_red"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+	            	android:layout_centerVertical="true"
+				    android:layout_toRightOf="@id/tv_red"
+				    android:focusable="true"
+				    android:max="255"
+				    android:maxHeight="10dp"
+				    android:minHeight="10dp"
+				    android:paddingLeft="15dip"
+				    android:paddingRight="15dip"
+				    android:progress="0"
+				    android:progressDrawable="@drawable/po_seekbar_red"
+				    android:thumb="@drawable/seekbar_thumb" />
+
+            </RelativeLayout>
+			    
+            <RelativeLayout
+	            android:id="@+id/rl_bottom_green"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/rl_bottom_red"
+	            android:padding="5dp"
+	            android:orientation="horizontal">
+                
+                <TextView
+                    android:id="@+id/tv_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:text="G:100"
+                    android:textColor="@color/green"
+                    android:textSize="15dp" />
+                <SeekBar
+				    android:id="@+id/sb_green"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+	            	android:layout_centerVertical="true"
+				    android:layout_toRightOf="@id/tv_green"
+				    android:focusable="true"
+				    android:max="255"
+				    android:maxHeight="10dp"
+				    android:minHeight="10dp"
+				    android:paddingLeft="15dip"
+				    android:paddingRight="15dip"
+				    android:progress="0"
+				    android:progressDrawable="@drawable/po_seekbar_green"
+				    android:thumb="@drawable/seekbar_thumb" />
+
+            </RelativeLayout>
+			    
+            <RelativeLayout
+	            android:id="@+id/rl_bottom_blue"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/rl_bottom_green"
+	            android:padding="5dp"
+	            android:orientation="horizontal">
+                
+                <TextView
+                    android:id="@+id/tv_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:text="B:100"
+                    android:textColor="@color/blue"
+                    android:textSize="15dp" />
+                <SeekBar
+				    android:id="@+id/sb_blue"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+	            	android:layout_centerVertical="true"
+				    android:layout_toRightOf="@id/tv_blue"
+				    android:focusable="true"
+				    android:max="255"
+				    android:maxHeight="10dp"
+				    android:minHeight="10dp"
+				    android:paddingLeft="15dip"
+				    android:paddingRight="15dip"
+				    android:progress="0"
+				    android:progressDrawable="@drawable/po_seekbar_blue"
+				    android:thumb="@drawable/seekbar_thumb" />
+
+            </RelativeLayout>
+			    
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/rl_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/rl_bottom"
+            android:layout_below="@id/rl_top"
+            android:background="#757575"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="50dp" 
+            android:orientation="horizontal">
+		    
+	        <RelativeLayout
+	            android:id="@+id/rl_content_01"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:orientation="vertical" 
+	            android:padding="5dp" >
+			    
+	            <ImageView
+	                android:id="@+id/iv_color_01"
+	                android:layout_width="@dimen/color_block_width_small"
+	                android:layout_height="@dimen/color_block_height_small"
+	                android:layout_alignParentTop="true"
+	                android:background="@color/color_01" />
+
+	            <ImageView
+	                android:id="@+id/iv_color_02"
+	                android:layout_width="@dimen/color_block_width_small"
+	                android:layout_height="@dimen/color_block_height_small"
+	                android:layout_below="@id/iv_color_01"
+	                android:layout_marginTop="@dimen/color_block_height_small_seperator"
+	                android:background="@color/color_02" />
+
+	            <ImageView
+	                android:id="@+id/iv_color_03"
+	                android:layout_width="@dimen/color_block_width_small"
+	                android:layout_height="@dimen/color_block_height_small"
+	                android:layout_below="@id/iv_color_02"
+	                android:layout_marginTop="@dimen/color_block_height_small_seperator"
+	                android:background="@color/color_03" />
+
+	            <ImageView
+	                android:id="@+id/iv_color_04"
+	                android:layout_width="@dimen/color_block_width_small"
+	                android:layout_height="@dimen/color_block_height_small"
+	                android:layout_alignLeft="@+id/iv_color_03"
+	                android:layout_below="@+id/iv_color_03"
+	                android:layout_marginTop="@dimen/color_block_height_small_seperator"
+	                android:background="@color/color_04" />
+			    
+	        </RelativeLayout>
+	        
+	        <RelativeLayout
+	            android:id="@+id/rl_content_03"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:orientation="vertical"
+	            android:padding="5dp" >
+			    
+	            <ImageView
+	                android:id="@+id/iv_color_05"
+	                android:layout_width="@dimen/color_block_width_small"
+	                android:layout_height="@dimen/color_block_height_small"
+	                android:layout_alignParentTop="true"
+	                android:background="@color/color_05" />
+
+	            <ImageView
+	                android:id="@+id/iv_color_06"
+	                android:layout_width="@dimen/color_block_width_small"
+	                android:layout_height="@dimen/color_block_height_small"
+	                android:layout_below="@id/iv_color_05"
+	                android:layout_marginTop="@dimen/color_block_height_small_seperator"
+	                android:background="@color/color_06" />
+
+	            <ImageView
+	                android:id="@+id/iv_color_08"
+	                android:layout_width="@dimen/color_block_width_small"
+	                android:layout_height="@dimen/color_block_height_small"
+	                android:layout_below="@id/iv_color_07"
+	                android:layout_marginTop="@dimen/color_block_height_small_seperator"
+	                android:background="@color/color_08" />
+
+	            <ImageView
+	                android:id="@+id/iv_color_07"
+	                android:layout_width="@dimen/color_block_width_small"
+	                android:layout_height="@dimen/color_block_height_small"
+	                android:layout_alignLeft="@+id/iv_color_08"
+	                android:layout_below="@+id/iv_color_06"
+	                android:layout_marginTop="@dimen/color_block_height_small_seperator"
+	                android:background="@color/color_07" />
+	            
+	        </RelativeLayout>
+            
+	        
+	        <RelativeLayout
+	            android:id="@+id/rl_content_02"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_toRightOf="@id/rl_content_01"
+	            android:layout_toLeftOf="@id/rl_content_03"
+	            android:padding="5dp" >
+	            
+	            <com.xiaoyu.utils.ColorPickerView
+	                android:id="@+id/cp_colorpicker"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_centerInParent="true" />
+	            
+			    <ImageView
+			        android:id="@+id/iv_preview"
+			        android:layout_width="80dp"
+			        android:layout_height="30dp"
+			        android:layout_below="@id/cp_colorpicker"
+			        android:layout_centerHorizontal="true"
+			        android:paddingTop="20dp" />
+				    
+	        </RelativeLayout>
+        </RelativeLayout>
+    
+    </RelativeLayout>
+</LinearLayout>
