@@ -130,6 +130,12 @@
             android:layout_alignParentBottom="true"
             android:background="#5D4037"
             android:padding="5dp" >
+            
+            <TextView
+                android:id="@+id/tv_log"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent" 
+	            android:text="@null" />
 			    
         </RelativeLayout>
         

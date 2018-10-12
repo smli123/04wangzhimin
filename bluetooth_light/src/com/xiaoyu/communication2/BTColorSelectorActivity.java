@@ -96,18 +96,20 @@ public class BTColorSelectorActivity  extends Activity
 			iv_show.setBackgroundColor(R.color.white);
 			
 		} else {
-			int count = Integer.valueOf(cmds[1]);
+//			int count = Integer.valueOf(cmds[1]);
+			int count = array_color.size();
 			for (int i = 0; i < array_color_int.size(); i++) {
 				
 			}
-//			String col = "#" + array_color.get(count- 1);
-//			iv_show.setBackgroundColor(Color.parseColor(col));
 			
-			int now_color = array_color_int.get(count- 1);
-			int red = Color.red(now_color);
-			int green = Color.green(now_color);
-			int blue = Color.blue(now_color);
-			iv_show.setBackgroundColor(Color.rgb(red, green, blue));
+			String color = "#" + array_color.get(count- 1);
+			iv_show.setBackgroundColor(Color.parseColor(color));
+			
+//			int now_color = array_color_int.get(count- 1);
+//			int red = Color.red(now_color);
+//			int green = Color.green(now_color);
+//			int blue = Color.blue(now_color);
+//			iv_show.setBackgroundColor(Color.rgb(red, green, blue));
 		}
 	}
 	
@@ -291,11 +293,16 @@ public class BTColorSelectorActivity  extends Activity
 			break;
 		case R.id.iv_preview:
 			array_color_int.add(Color.rgb(value_red, value_green, value_blue));
-			array_color.add(Integer.toHexString(value_red) + Integer.toHexString(value_green) + Integer.toHexString(value_blue));
+//			array_color.add(Integer.toHexString(value_red) + Integer.toHexString(value_green) + Integer.toHexString(value_blue));
+			array_color.add(IntToHexString(value_red) + IntToHexString(value_green) + IntToHexString(value_blue));
 			genStringCommand();
 			updateUI();
 			break;
 		}
+	}
+	
+	private String IntToHexString(int value) {
+		return String.format("%02x",value);
 	}
 	
 	@SuppressLint("NewApi") 

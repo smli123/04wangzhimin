@@ -27,6 +27,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaoyu.bluetooth.BTClient;
@@ -67,6 +68,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
     private ImageView iv_color_12;
     
     private RelativeLayout rl_bottom;
+    private TextView tv_log;
     
     private String[] str_color_info = new String[12];
     
@@ -86,7 +88,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		
 		initViewShow();
 		
-//		updateUI();
+		updateUI();
 	}
 	
 	@Override
@@ -116,17 +118,17 @@ public class BTLightActivity extends Activity implements OnClickListener {
 
 	private void loadData() {
 		str_color_info[0] = mSharedPreferences.getString("COLOR_01", "1,1,ff0000");
-		str_color_info[1] = mSharedPreferences.getString("COLOR_01", "1,1,966314");
-		str_color_info[2] = mSharedPreferences.getString("COLOR_01", "1,1,0074E1");
-		str_color_info[3] = mSharedPreferences.getString("COLOR_01", "1,1,966314");
-		str_color_info[4] = mSharedPreferences.getString("COLOR_01", "1,1,FF5252");
-		str_color_info[5] = mSharedPreferences.getString("COLOR_01", "1,1,FFFFFF");
-		str_color_info[6] = mSharedPreferences.getString("COLOR_01", "1,1,FFCDD2");
-		str_color_info[7] = mSharedPreferences.getString("COLOR_01", "1,1,FFC107");
-		str_color_info[8] = mSharedPreferences.getString("COLOR_01", "1,1,3F51B5");
-		str_color_info[9] = mSharedPreferences.getString("COLOR_01", "1,1,00BCD4");
-		str_color_info[10] = mSharedPreferences.getString("COLOR_01", "1,1,388E3C");
-		str_color_info[11] = mSharedPreferences.getString("COLOR_01", "1,1,C8E6C9");
+		str_color_info[1] = mSharedPreferences.getString("COLOR_02", "1,1,966314");
+		str_color_info[2] = mSharedPreferences.getString("COLOR_03", "1,1,0074E1");
+		str_color_info[3] = mSharedPreferences.getString("COLOR_04", "1,1,966314");
+		str_color_info[4] = mSharedPreferences.getString("COLOR_05", "1,1,FF5252");
+		str_color_info[5] = mSharedPreferences.getString("COLOR_06", "1,1,FFFFFF");
+		str_color_info[6] = mSharedPreferences.getString("COLOR_07", "1,1,FFCDD2");
+		str_color_info[7] = mSharedPreferences.getString("COLOR_08", "1,1,FFC107");
+		str_color_info[8] = mSharedPreferences.getString("COLOR_09", "1,1,3F51B5");
+		str_color_info[9] = mSharedPreferences.getString("COLOR_10", "1,1,00BCD4");
+		str_color_info[10] = mSharedPreferences.getString("COLOR_11", "1,1,388E3C");
+		str_color_info[11] = mSharedPreferences.getString("COLOR_12", "1,1,C8E6C9");
 	}
 
 	private Handler detectedHandler = new Handler(){
@@ -327,12 +329,15 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			// do nothing...
 		} else {
 			int last = cmds.length - 1;
-			int color = Integer.valueOf(cmds[last], 16);
-			int red = Color.red(color);
-			int green = Color.green(color);
-			int blue = Color.blue(color);
+//			int color = Integer.valueOf(cmds[last], 16);
+//			int red = Color.red(color);
+//			int green = Color.green(color);
+//			int blue = Color.blue(color);
+//			
+//			iv_color.setBackgroundColor(Color.rgb(red, green, blue));
 			
-			iv_color.setBackgroundColor(Color.rgb(red, green, blue));
+			String color = "#" + cmds[last];
+			iv_color.setBackgroundColor(Color.parseColor(color));
 		}
 	}
 	 
@@ -378,6 +383,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_10 = (ImageView) findViewById(R.id.iv_color_10);
 		iv_color_11 = (ImageView) findViewById(R.id.iv_color_11);
 		iv_color_12 = (ImageView) findViewById(R.id.iv_color_12);
+		
+		tv_log = (TextView) findViewById(R.id.tv_log);
 		
 		iv_bluetooth.setOnClickListener(this);
 		iv_close.setOnClickListener(this);
@@ -613,5 +620,7 @@ public class BTLightActivity extends Activity implements OnClickListener {
 	private void btSendCommand(String command) {
 		editMsgView.setText(command);
 		sendButton.performClick();
+		
+		tv_log.setText(command);
 	}
 }
