@@ -54,6 +54,7 @@ public class BTColorSelectorActivity  extends Activity
 	int value_green = 0;
 	int value_blue = 0;
 	
+	ArrayList<Integer> array_color_int = new ArrayList<Integer>();
 	ArrayList<String> array_color = new ArrayList<String>();
 	
 	private SharedPreferences mSharedPreferences;
@@ -86,11 +87,17 @@ public class BTColorSelectorActivity  extends Activity
 			
 		} else {
 			int count = Integer.valueOf(cmds[1]);
-			for (int i = 0; i < array_color.size(); i++) {
+			for (int i = 0; i < array_color_int.size(); i++) {
 				
 			}
-			String col = "#" + array_color.get(count- 1);
-			iv_show.setBackgroundColor(Color.parseColor(col));
+//			String col = "#" + array_color.get(count- 1);
+//			iv_show.setBackgroundColor(Color.parseColor(col));
+			
+			int now_color = array_color_int.get(count- 1);
+			int red = Color.red(now_color);
+			int green = Color.green(now_color);
+			int blue = Color.blue(now_color);
+			iv_show.setBackgroundColor(Color.rgb(red, green, blue));
 		}
 	}
 	
@@ -141,6 +148,19 @@ public class BTColorSelectorActivity  extends Activity
 		cp_colorpicker.setColorChangedListener(new ColorPickerView.OnColorChangedListener(){
 			@Override
 			public void onColorChanged(int color) {
+//				value_red = (color >>  16) & 0xFF;
+//			    value_green = (color >>   8) & 0xFF;
+//			    value_blue = (color)        & 0xFF;
+			    
+			    value_red = Color.red(color);
+			    value_green = Color.green(color);
+			    value_blue = Color.blue(color);
+			    
+			    sb_red.setProgress(value_red);
+			    sb_green.setProgress(value_green);
+			    sb_blue.setProgress(value_blue);
+			    
+				updatePreview();
  
 			}
 		});
@@ -245,6 +265,7 @@ public class BTColorSelectorActivity  extends Activity
 		case R.id.iv_color_08:
 			break;
 		case R.id.iv_preview:
+			array_color_int.add(Color.rgb(value_red, value_green, value_blue));
 			array_color.add(Integer.toHexString(value_red) + Integer.toHexString(value_green) + Integer.toHexString(value_blue));
 			genStringCommand();
 			break;
