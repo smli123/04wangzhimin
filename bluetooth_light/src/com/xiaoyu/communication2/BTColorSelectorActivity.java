@@ -1,9 +1,7 @@
 package com.xiaoyu.communication2;
 
 import java.util.ArrayList;
-
 import com.xiaoyu.utils.ColorPickerView;
-
 import android.R.array;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -56,22 +55,20 @@ public class BTColorSelectorActivity  extends Activity
 	int value_green = 0;
 	int value_blue = 0;
 	
+	int value_play = 0;
+	int value_light = 0;
+	int value_flash = 0;
+	
 	int result_return = 0;
 	
 	ArrayList<Integer> array_color_int = new ArrayList<Integer>();
 	ArrayList<String> array_color = new ArrayList<String>();
 	
-	private SharedPreferences mSharedPreferences;
-	private SharedPreferences.Editor editor;
-    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bt_selectcolor);
 		mContext = this;
-		
-		mSharedPreferences = getSharedPreferences("SmartLight", Activity.MODE_PRIVATE);
-		loadData();
 		
 		// load Data from intent
 		Intent intent = getIntent();
@@ -89,10 +86,10 @@ public class BTColorSelectorActivity  extends Activity
 	@SuppressLint("ResourceAsColor") 
 	private void updateUI() {
 		String[] cmds = str_color_info.split(",");
-		if (cmds.length < 2)
+		if (cmds.length < 5)
 			return;
 		
-		if (cmds.length == 2) {
+		if (cmds.length == 5) {
 			iv_show.setBackgroundColor(R.color.white);
 			
 		} else {
@@ -102,14 +99,14 @@ public class BTColorSelectorActivity  extends Activity
 				
 			}
 			
-			String color = "#" + array_color.get(count- 1);
-			iv_show.setBackgroundColor(Color.parseColor(color));
+//			String color = "#" + array_color.get(count- 1);
+//			iv_show.setBackgroundColor(Color.parseColor(color));
 			
-//			int now_color = array_color_int.get(count- 1);
-//			int red = Color.red(now_color);
-//			int green = Color.green(now_color);
-//			int blue = Color.blue(now_color);
-//			iv_show.setBackgroundColor(Color.rgb(red, green, blue));
+			int now_color = array_color_int.get(count- 1);
+			int red = Color.red(now_color);
+			int green = Color.green(now_color);
+			int blue = Color.blue(now_color);
+			iv_show.setBackgroundColor(Color.rgb(red, green, blue));
 		}
 	}
 	
@@ -233,18 +230,6 @@ public class BTColorSelectorActivity  extends Activity
 		iv_preview.setBackgroundColor(Color.rgb(value_red, value_green, value_blue));
 	}
 	
-	private void saveData() {
-		editor = mSharedPreferences.edit();
-
-		editor.putString("COLOR_01", str_color_info);
-
-		editor.commit();
-	}
-
-	private void loadData() {
-		str_color_info = mSharedPreferences.getString("COLOR_01", "1,1,ff0000");
-	}
-
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()) {
@@ -332,16 +317,18 @@ public class BTColorSelectorActivity  extends Activity
 		array_color.clear();
 		
 		String[] cmds = str_color_info.split(",");
-		if (cmds.length < 2)
+		if (cmds.length < 5)
 			return;
+		value_play = Integer.valueOf(cmds[0]);
+		value_light = Integer.valueOf(cmds[1]);
+		value_flash = Integer.valueOf(cmds[2]);
+		i_bluetooth_mode = Integer.valueOf(cmds[3]);
 		
-		i_bluetooth_mode = Integer.valueOf(cmds[0]);
-		
-		if (cmds.length == 2) {
+		if (cmds.length == 5) {
 			// do nothing...
 		} else {
-			int count = Integer.valueOf(cmds[1]);
-			for (int i = 2; i < count + 2; i++) {
+			int count = Integer.valueOf(cmds[4]);
+			for (int i = 5; i < count + 5; i++) {
 				int col = Integer.valueOf(cmds[i], 16);
 				
 				String value = Integer.toString(col, 16);
@@ -369,10 +356,24 @@ public class BTColorSelectorActivity  extends Activity
 		}
 		
 		if (count <= 0) {
-			str_color_info = String.valueOf(i_bluetooth_mode) + "," + count;
+			str_color_info = String.valueOf(value_play) + "," +
+					String.valueOf(value_light) + "," +
+					String.valueOf(value_flash) + "," +
+					String.valueOf(i_bluetooth_mode) + "," + count;
 		} else {
-			str_color_info = String.valueOf(i_bluetooth_mode) + "," + count + "," + colors;
+			str_color_info = String.valueOf(value_play) + "," +
+					String.valueOf(value_light) + "," +
+					String.valueOf(value_flash) + "," +
+					String.valueOf(i_bluetooth_mode) + "," + count + "," + colors;
 		}
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			iv_ok.performClick();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 }

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +28,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +37,7 @@ import com.xiaoyu.bluetooth.BTManage;
 import com.xiaoyu.bluetooth.BTServer;
 import com.xiaoyu.bluetooth.BluetoothMsg;
 
-public class BTLightActivity extends Activity implements OnClickListener {
+public class BTLightActivity extends Activity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
 	private Context mContext;
 	private ListView mListView;  
     private Button sendButton;  
@@ -67,8 +69,25 @@ public class BTLightActivity extends Activity implements OnClickListener {
     private ImageView iv_color_11;
     private ImageView iv_color_12;
     
+    private RelativeLayout rl_color_parameter;
+    private RelativeLayout rl_color_parameter_01;
+    
+    private SeekBar sb_play;
+    private SeekBar sb_light;
+    private SeekBar sb_flash;
+    
     private RelativeLayout rl_bottom;
     private TextView tv_log;
+    
+    private int value_play_pos = 0;
+    private int value_light_pos = 0;
+    private int value_flash_pos = 0;
+    private int i_bluetooth_mode = 0;
+    private int i_color_count = 1;
+    
+    private int i_index_color = -1;
+    
+	ArrayList<String> array_color = new ArrayList<String>();
     
     private String[] str_color_info = new String[12];
     
@@ -117,18 +136,18 @@ public class BTLightActivity extends Activity implements OnClickListener {
 	}
 
 	private void loadData() {
-		str_color_info[0] = mSharedPreferences.getString("COLOR_01", "1,1,ff0000");
-		str_color_info[1] = mSharedPreferences.getString("COLOR_02", "1,1,966314");
-		str_color_info[2] = mSharedPreferences.getString("COLOR_03", "1,1,0074E1");
-		str_color_info[3] = mSharedPreferences.getString("COLOR_04", "1,1,966314");
-		str_color_info[4] = mSharedPreferences.getString("COLOR_05", "1,1,FF5252");
-		str_color_info[5] = mSharedPreferences.getString("COLOR_06", "1,1,FFFFFF");
-		str_color_info[6] = mSharedPreferences.getString("COLOR_07", "1,1,FFCDD2");
-		str_color_info[7] = mSharedPreferences.getString("COLOR_08", "1,1,FFC107");
-		str_color_info[8] = mSharedPreferences.getString("COLOR_09", "1,1,3F51B5");
-		str_color_info[9] = mSharedPreferences.getString("COLOR_10", "1,1,00BCD4");
-		str_color_info[10] = mSharedPreferences.getString("COLOR_11", "1,1,388E3C");
-		str_color_info[11] = mSharedPreferences.getString("COLOR_12", "1,1,C8E6C9");
+		str_color_info[0] = mSharedPreferences.getString("COLOR_01", "0,0,0,1,1,ff0000");
+		str_color_info[1] = mSharedPreferences.getString("COLOR_02", "0,0,0,1,1,966314");
+		str_color_info[2] = mSharedPreferences.getString("COLOR_03", "0,0,0,1,1,0074E1");
+		str_color_info[3] = mSharedPreferences.getString("COLOR_04", "0,0,0,1,1,966314");
+		str_color_info[4] = mSharedPreferences.getString("COLOR_05", "0,0,0,1,1,FF5252");
+		str_color_info[5] = mSharedPreferences.getString("COLOR_06", "0,0,0,1,1,FFFFFF");
+		str_color_info[6] = mSharedPreferences.getString("COLOR_07", "0,0,0,1,1,FFCDD2");
+		str_color_info[7] = mSharedPreferences.getString("COLOR_08", "0,0,0,1,1,FFC107");
+		str_color_info[8] = mSharedPreferences.getString("COLOR_09", "0,0,0,1,1,3F51B5");
+		str_color_info[9] = mSharedPreferences.getString("COLOR_10", "0,0,0,1,1,00BCD4");
+		str_color_info[10] = mSharedPreferences.getString("COLOR_11", "0,0,0,1,1,388E3C");
+		str_color_info[11] = mSharedPreferences.getString("COLOR_12", "0,0,0,1,1,C8E6C9");
 	}
 
 	private Handler detectedHandler = new Handler(){
@@ -253,8 +272,55 @@ public class BTLightActivity extends Activity implements OnClickListener {
                  BluetoothMsg.serviceOrCilent=BluetoothMsg.ServerOrCilent.NONE;  
                  Toast.makeText(getApplicationContext(), "已断开连接！", Toast.LENGTH_SHORT).show();  
              }  
-         });       
+         });
+
+         rl_color_parameter = (RelativeLayout)findViewById(R.id.rl_color_parameter);
+         rl_color_parameter.setVisibility(View.GONE);
+
+         rl_color_parameter_01 = (RelativeLayout)findViewById(R.id.rl_color_parameter_01);
+         
+         sb_play = (SeekBar) findViewById(R.id.sb_play);
+         sb_light = (SeekBar) findViewById(R.id.sb_light);
+         sb_flash = (SeekBar) findViewById(R.id.sb_flash);
+         
+    	 sb_play.setProgress(value_play_pos);
+    	 sb_play.setOnSeekBarChangeListener(this);
+
+    	 sb_light.setProgress(value_light_pos);
+    	 sb_light.setOnSeekBarChangeListener(this);
+
+    	 sb_flash.setProgress(value_flash_pos);
+    	 sb_flash.setOnSeekBarChangeListener(this);
      }
+	 
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress,
+			boolean fromUser) {
+		
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+		
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
+		switch(seekBar.getId()) {
+		case R.id.sb_play:
+			value_play_pos = seekBar.getProgress();
+			break;
+		case R.id.sb_light:
+			value_light_pos = seekBar.getProgress();
+			break;
+		case R.id.sb_flash:
+			value_flash_pos = seekBar.getProgress();
+			break;
+		}
+		
+		str_color_info[i_index_color] = toColorInfo();
+		btSendCommand(str_color_info[i_index_color]);
+	}
 	 
 	 @Override
 	protected void onResume() {
@@ -320,12 +386,12 @@ public class BTLightActivity extends Activity implements OnClickListener {
 	
 	private void setImageViewBackgroundColor(ImageView iv_color, String str_color) {
 		String[] cmds = str_color.split(",");
-		if (cmds.length < 2)
+		if (cmds.length < 5)
 			return;
 		
-		int i_bluetooth_mode = Integer.valueOf(cmds[0]);
+		int i_bluetooth_mode = Integer.valueOf(cmds[3]);
 		
-		if (cmds.length == 2) {
+		if (cmds.length == 5) {
 			// do nothing...
 		} else {
 			int last = cmds.length - 1;
@@ -368,6 +434,57 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		return true;
 	}
 
+	private void fromColorInfo(String color_info) {
+		array_color.clear();
+		
+		String[] cmds = color_info.split(",");
+		if (cmds.length < 5)
+			return;
+		value_play_pos = Integer.valueOf(cmds[0]);
+		value_light_pos = Integer.valueOf(cmds[1]);
+		value_flash_pos = Integer.valueOf(cmds[2]);
+		i_bluetooth_mode = Integer.valueOf(cmds[3]);
+		
+		if (cmds.length == 5) {
+			// do nothing...
+		} else {
+			i_color_count = Integer.valueOf(cmds[4]);
+			for (int i = 5; i < i_color_count + 5; i++) {
+				int col = Integer.valueOf(cmds[i], 16);
+				
+				String value = Integer.toString(col, 16);
+				array_color.add(value);
+			}
+		}
+	}
+
+	private String toColorInfo() {
+		String colors = "";
+		for (int i = 0; i < array_color.size(); i++) {
+			colors += array_color.get(i);
+			if (i < array_color.size() - 1) {
+				colors += ",";
+			}
+		}
+		
+		String color_info = "";
+		
+		if (i_color_count <= 0) {
+			color_info = String.valueOf(value_play_pos) + "," +
+					String.valueOf(value_light_pos) + "," +
+					String.valueOf(value_flash_pos) + "," +
+					String.valueOf(i_bluetooth_mode);
+		} else {
+			color_info = String.valueOf(value_play_pos) + "," +
+					String.valueOf(value_light_pos) + "," +
+					String.valueOf(value_flash_pos) + "," +
+					String.valueOf(i_bluetooth_mode) + "," +
+					String.valueOf(i_color_count) + "," + colors;
+		}
+		
+		return color_info;
+	}
+
 	private void initViewShow() {
 		iv_bluetooth = (ImageView) findViewById(R.id.iv_bluetooth);
 		iv_close = (ImageView) findViewById(R.id.iv_close);
@@ -392,7 +509,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_01.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[0]);	// Mode, Count, color01, color02, color03
+				i_index_color = 0;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -410,7 +528,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_02.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[1]);	// Mode, Count, color01, color02, color03
+				i_index_color = 1;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -428,7 +547,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_03.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[2]);	// Mode, Count, color01, color02, color03
+				i_index_color = 2;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -446,7 +566,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_04.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[3]);	// Mode, Count, color01, color02, color03
+				i_index_color = 3;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -464,7 +585,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_05.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[4]);	// Mode, Count, color01, color02, color03
+				i_index_color = 4;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -482,7 +604,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_06.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[5]);	// Mode, Count, color01, color02, color03
+				i_index_color = 5;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -500,7 +623,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_07.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[6]);	// Mode, Count, color01, color02, color03
+				i_index_color = 6;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -518,7 +642,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_08.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[7]);	// Mode, Count, color01, color02, color03
+				i_index_color = 7;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -536,7 +661,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_09.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[8]);	// Mode, Count, color01, color02, color03
+				i_index_color = 8;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -554,7 +680,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_10.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[9]);	// Mode, Count, color01, color02, color03
+				i_index_color = 9;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -572,7 +699,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_11.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[10]);	// Mode, Count, color01, color02, color03
+				i_index_color = 10;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -590,7 +718,8 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		iv_color_12.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				btSendCommand(str_color_info[11]);	// Mode, Count, color01, color02, color03
+				i_index_color = 11;
+				updateUIAndSendComamnd();
 			}
 		});
 
@@ -605,6 +734,23 @@ public class BTLightActivity extends Activity implements OnClickListener {
 			}
 		});
 		
+	}
+	
+	private void updateUIAndSendComamnd() {
+		fromColorInfo(str_color_info[i_index_color]);
+		
+		rl_color_parameter.setVisibility(View.VISIBLE);
+		if (i_color_count <= 1) {
+			rl_color_parameter_01.setVisibility(View.GONE);
+		} else {
+			rl_color_parameter_01.setVisibility(View.VISIBLE);
+		}
+		
+		sb_play.setProgress(value_play_pos);
+		sb_light.setProgress(value_light_pos);
+		sb_flash.setProgress(value_flash_pos);
+
+		btSendCommand(str_color_info[i_index_color]);	// Mode, Count, color01, color02, color03
 	}
 
 	@Override
@@ -622,5 +768,15 @@ public class BTLightActivity extends Activity implements OnClickListener {
 		sendButton.performClick();
 		
 		tv_log.setText(command);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			saveData();
+			finish();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

@@ -98,7 +98,7 @@
         android:id="@+id/rl_total"
         android:layout_width="match_parent"
         android:layout_height="match_parent" 
-        android:background="#FFFFFF">
+        android:background="#5D4037">
         
         <RelativeLayout
             android:id="@+id/rl_top"
@@ -139,12 +139,120 @@
 			    
         </RelativeLayout>
         
+        
+        <RelativeLayout
+            android:id="@+id/rl_color_parameter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rl_bottom"
+            android:background="#5D4037"
+            android:padding="5dp" >
+            
+            <RelativeLayout
+	            android:id="@+id/rl_color_parameter_01"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="#5D4037"
+	            android:padding="5dp" >
+
+	            <ImageView
+	                android:id="@+id/iv_play"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:src="@drawable/smp_play" />
+
+			    <SeekBar
+			        android:id="@+id/sb_play"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_centerVertical="true"
+			        android:layout_toRightOf="@id/iv_play"
+			        android:focusable="true"
+			        android:max="100"
+			        android:maxHeight="10dp"
+			        android:minHeight="10dp"
+			        android:paddingLeft="25dip"
+			        android:paddingRight="15dip"
+			        android:progress="0"
+			        android:progressDrawable="@drawable/po_seekbar_red"
+			        android:thumb="@drawable/seekbar_thumb" />
+
+			</RelativeLayout>
+			 
+            <RelativeLayout
+	            android:id="@+id/rl_color_parameter_02"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/rl_color_parameter_01"
+	            android:background="#5D4037"
+	            android:padding="5dp" >
+
+	            <ImageView
+	                android:id="@+id/iv_light"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:src="@drawable/smp_light" />
+
+			    <SeekBar
+			        android:id="@+id/sb_light"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_centerVertical="true"
+			        android:layout_toRightOf="@id/iv_light"
+			        android:focusable="true"
+			        android:max="100"
+			        android:maxHeight="10dp"
+			        android:minHeight="10dp"
+			        android:paddingLeft="25dip"
+			        android:paddingRight="15dip"
+			        android:progress="0"
+			        android:progressDrawable="@drawable/po_seekbar_red"
+			        android:thumb="@drawable/seekbar_thumb" />
+
+			</RelativeLayout>
+			 
+            <RelativeLayout
+	            android:id="@+id/rl_color_parameter_03"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/rl_color_parameter_02"
+	            android:background="#5D4037"
+	            android:padding="5dp" >
+
+	            <ImageView
+	                android:id="@+id/iv_flash"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:src="@drawable/smp_play" />
+
+			    <SeekBar
+			        android:id="@+id/sb_flash"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_centerVertical="true"
+			        android:layout_toRightOf="@id/iv_flash"
+			        android:focusable="true"
+			        android:max="100"
+			        android:maxHeight="10dp"
+			        android:minHeight="10dp"
+			        android:paddingLeft="25dip"
+			        android:paddingRight="15dip"
+			        android:progress="0"
+			        android:progressDrawable="@drawable/po_seekbar_red"
+			        android:thumb="@drawable/seekbar_thumb" />
+
+			</RelativeLayout>
+			 
+        </RelativeLayout>
+        
         <RelativeLayout
             android:id="@+id/rl_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/rl_top"
-            android:layout_above="@id/rl_bottom"
             android:background="#757575"
             android:padding="5dp"
             android:orientation="vertical" >
