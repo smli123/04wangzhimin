@@ -95,57 +95,37 @@ public class BTColorSelectorActivity  extends Activity
 			iv_show.setBackgroundColor(R.color.white);
 			
 		} else {
-//			int count = Integer.valueOf(cmds[1]);
+//			int count = Integer.valueOf(cmds[4]);
 			int count = array_color.size();
 			
 			int colors[] = new int[count];
+			int now_color = 0, red = 0, green = 0, blue = 0;
+			
 			for (int i = 0; i < array_color_int.size(); i++) {
-				int now_color = array_color_int.get(i);
-				int red = Color.red(now_color);
-				int green = Color.green(now_color);
-				int blue = Color.blue(now_color);
-				
+				now_color = array_color_int.get(i);
+				red = Color.red(now_color);
+				green = Color.green(now_color);
+				blue = Color.blue(now_color);
 				colors[i] = Color.rgb(red, green, blue);
 			}
 			
-//			String color = "#" + array_color.get(count- 1);
-//			iv_show.setBackgroundColor(Color.parseColor(color));
+			int strokeWidth = 1;     						// 1dp 边框宽度
+			int roundRadius = 5;     						// 5dp 圆角半径
+			int strokeColor = Color.parseColor("#00FF00");	//边框颜色
+			int fillColor = Color.rgb(red, green, blue); 	//内部填充颜色
 			
-			int now_color = array_color_int.get(count- 1);
-			int red = Color.red(now_color);
-			int green = Color.green(now_color);
-			int blue = Color.blue(now_color);
-			
-
-			int strokeWidth = 1;     // 1dp 边框宽度
-			int roundRadius = 5;     // 5dp 圆角半径
-			int strokeColor = Color.parseColor("#00FF00");//边框颜色
-			int fillColor = now_color; //内部填充颜色
-			
-			GradientDrawable gd = new GradientDrawable();//创建drawable
+			GradientDrawable gd = new GradientDrawable();	//创建drawable
 			gd.setCornerRadius(roundRadius);
 			gd.setStroke(strokeWidth, strokeColor);
 			if (count == 1) {
 				gd.setColor(fillColor);
 				gd.setGradientType(GradientDrawable.RECTANGLE);
-				iv_show.setBackgroundColor(Color.rgb(red, green, blue));
 			} else {
-			
-				// GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
 				gd.setGradientType(GradientDrawable.LINEAR_GRADIENT);
 				gd.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
 				gd.setColors(colors);
-				iv_show.setBackgroundDrawable(gd);
-			
-//				GradientDrawable myGrad = (GradientDrawable)iv_show.getBackground();
-//				myGrad.setColor (now_color);
-//				iv_show.setBackgroundDrawable(myGrad);
-//			
-//				GradientDrawable.Orientation[] orientations;
-//				GradientDrawable myGrad = (GradientDrawable) iv_show.getBackground();
-//				myGrad.setLevel(10000);
-//		        orientations = GradientDrawable.Orientation.values();
 			}
+			iv_show.setBackgroundDrawable(gd);
 		}
 	}
 	

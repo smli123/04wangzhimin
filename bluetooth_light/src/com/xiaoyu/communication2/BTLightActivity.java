@@ -4,11 +4,13 @@ package com.xiaoyu.communication2;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -56,18 +58,18 @@ public class BTLightActivity extends Activity implements OnClickListener, SeekBa
     // New content type
     private ImageView iv_bluetooth;
     private ImageView iv_close;
-    private ImageView iv_color_01;
-    private ImageView iv_color_02;
-    private ImageView iv_color_03;
-    private ImageView iv_color_04;
-    private ImageView iv_color_05;
-    private ImageView iv_color_06;
-    private ImageView iv_color_07;
-    private ImageView iv_color_08;
-    private ImageView iv_color_09;
-    private ImageView iv_color_10;
-    private ImageView iv_color_11;
-    private ImageView iv_color_12;
+    private TextView iv_color_01;
+    private TextView iv_color_02;
+    private TextView iv_color_03;
+    private TextView iv_color_04;
+    private TextView iv_color_05;
+    private TextView iv_color_06;
+    private TextView iv_color_07;
+    private TextView iv_color_08;
+    private TextView iv_color_09;
+    private TextView iv_color_10;
+    private TextView iv_color_11;
+    private TextView iv_color_12;
     
     private RelativeLayout rl_color_parameter;
     private RelativeLayout rl_color_parameter_01;
@@ -370,21 +372,21 @@ public class BTLightActivity extends Activity implements OnClickListener, SeekBa
 	}
 	 
 	private void updateUI() {
-		setImageViewBackgroundColor(iv_color_01, str_color_info[0]);
-		setImageViewBackgroundColor(iv_color_02, str_color_info[1]);
-		setImageViewBackgroundColor(iv_color_03, str_color_info[2]);
-		setImageViewBackgroundColor(iv_color_04, str_color_info[3]);
-		setImageViewBackgroundColor(iv_color_05, str_color_info[4]);
-		setImageViewBackgroundColor(iv_color_06, str_color_info[5]);
-		setImageViewBackgroundColor(iv_color_07, str_color_info[6]);
-		setImageViewBackgroundColor(iv_color_08, str_color_info[7]);
-		setImageViewBackgroundColor(iv_color_09, str_color_info[8]);
-		setImageViewBackgroundColor(iv_color_10, str_color_info[9]);
-		setImageViewBackgroundColor(iv_color_11, str_color_info[10]);
-		setImageViewBackgroundColor(iv_color_12, str_color_info[11]);
+		setTextViewBackgroundColor(iv_color_01, str_color_info[0]);
+		setTextViewBackgroundColor(iv_color_02, str_color_info[1]);
+		setTextViewBackgroundColor(iv_color_03, str_color_info[2]);
+		setTextViewBackgroundColor(iv_color_04, str_color_info[3]);
+		setTextViewBackgroundColor(iv_color_05, str_color_info[4]);
+		setTextViewBackgroundColor(iv_color_06, str_color_info[5]);
+		setTextViewBackgroundColor(iv_color_07, str_color_info[6]);
+		setTextViewBackgroundColor(iv_color_08, str_color_info[7]);
+		setTextViewBackgroundColor(iv_color_09, str_color_info[8]);
+		setTextViewBackgroundColor(iv_color_10, str_color_info[9]);
+		setTextViewBackgroundColor(iv_color_11, str_color_info[10]);
+		setTextViewBackgroundColor(iv_color_12, str_color_info[11]);
 	}
 	
-	private void setImageViewBackgroundColor(ImageView iv_color, String str_color) {
+	@SuppressLint("NewApi") private void setTextViewBackgroundColor(TextView iv_color, String str_color) {
 		String[] cmds = str_color.split(",");
 		if (cmds.length < 5)
 			return;
@@ -393,17 +395,41 @@ public class BTLightActivity extends Activity implements OnClickListener, SeekBa
 		
 		if (cmds.length == 5) {
 			// do nothing...
-		} else {
-			int last = cmds.length - 1;
-//			int color = Integer.valueOf(cmds[last], 16);
-//			int red = Color.red(color);
-//			int green = Color.green(color);
-//			int blue = Color.blue(color);
-//			
-//			iv_color.setBackgroundColor(Color.rgb(red, green, blue));
+			return;
 			
-			String color = "#" + cmds[last];
-			iv_color.setBackgroundColor(Color.parseColor(color));
+		} else {
+			int count = Integer.valueOf(cmds[4]);
+			
+			int colors[] = new int[count];
+			int now_color = 0, red = 0, green = 0, blue = 0;
+			
+			for (int i = 0; i < count; i++) {
+				now_color = Integer.valueOf(cmds[i + 5], 16);
+				red = Color.red(now_color);
+				green = Color.green(now_color);
+				blue = Color.blue(now_color);
+				colors[i] = Color.rgb(red, green, blue);
+			}
+			
+			int strokeWidth = 1;     						// 1dp 边框宽度
+			int roundRadius = 5;     						// 5dp 圆角半径
+			int strokeColor = Color.parseColor("#00FF00");	//边框颜色
+			int fillColor = Color.rgb(red, green, blue); 	//内部填充颜色
+			
+			GradientDrawable gd = new GradientDrawable();	//创建drawable
+			gd.setCornerRadius(roundRadius);
+			gd.setStroke(strokeWidth, strokeColor);
+			if (count == 1) {
+				gd.setColor(fillColor);
+				gd.setGradientType(GradientDrawable.RECTANGLE);
+				iv_color.setBackgroundDrawable(gd);
+//				iv_color.setBackgroundColor(Color.rgb(red, green, blue));
+			} else {
+				gd.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+				gd.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+				gd.setColors(colors);
+				iv_color.setBackgroundDrawable(gd);
+			}
 		}
 	}
 	 
@@ -488,18 +514,18 @@ public class BTLightActivity extends Activity implements OnClickListener, SeekBa
 	private void initViewShow() {
 		iv_bluetooth = (ImageView) findViewById(R.id.iv_bluetooth);
 		iv_close = (ImageView) findViewById(R.id.iv_close);
-		iv_color_01 = (ImageView) findViewById(R.id.iv_color_01);
-		iv_color_02 = (ImageView) findViewById(R.id.iv_color_02);
-		iv_color_03 = (ImageView) findViewById(R.id.iv_color_03);
-		iv_color_04 = (ImageView) findViewById(R.id.iv_color_04);
-		iv_color_05 = (ImageView) findViewById(R.id.iv_color_05);
-		iv_color_06 = (ImageView) findViewById(R.id.iv_color_06);
-		iv_color_07 = (ImageView) findViewById(R.id.iv_color_07);
-		iv_color_08 = (ImageView) findViewById(R.id.iv_color_08);
-		iv_color_09 = (ImageView) findViewById(R.id.iv_color_09);
-		iv_color_10 = (ImageView) findViewById(R.id.iv_color_10);
-		iv_color_11 = (ImageView) findViewById(R.id.iv_color_11);
-		iv_color_12 = (ImageView) findViewById(R.id.iv_color_12);
+		iv_color_01 = (TextView) findViewById(R.id.iv_color_01);
+		iv_color_02 = (TextView) findViewById(R.id.iv_color_02);
+		iv_color_03 = (TextView) findViewById(R.id.iv_color_03);
+		iv_color_04 = (TextView) findViewById(R.id.iv_color_04);
+		iv_color_05 = (TextView) findViewById(R.id.iv_color_05);
+		iv_color_06 = (TextView) findViewById(R.id.iv_color_06);
+		iv_color_07 = (TextView) findViewById(R.id.iv_color_07);
+		iv_color_08 = (TextView) findViewById(R.id.iv_color_08);
+		iv_color_09 = (TextView) findViewById(R.id.iv_color_09);
+		iv_color_10 = (TextView) findViewById(R.id.iv_color_10);
+		iv_color_11 = (TextView) findViewById(R.id.iv_color_11);
+		iv_color_12 = (TextView) findViewById(R.id.iv_color_12);
 		
 		tv_log = (TextView) findViewById(R.id.tv_log);
 		

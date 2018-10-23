@@ -264,20 +264,20 @@
 	            android:padding="5dp"
 	            android:orientation="horizontal" >
 			    
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_01"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
 	                android:layout_alignParentLeft="true"
 	                android:background="@color/color_01" />
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_02"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
 	                android:layout_marginLeft="@dimen/color_block_width_seperator"
             		android:layout_toRightOf="@id/iv_color_01"
 	                android:background="@color/color_02" />
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_03"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
@@ -294,20 +294,20 @@
 	            android:layout_below="@id/rl_content_01"
 	            android:padding="5dp" >
 			    
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_04"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
 	                android:layout_alignParentLeft="true"
 	                android:background="@color/color_04" />
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_05"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
 	                android:layout_marginLeft="@dimen/color_block_width_seperator"
             		android:layout_toRightOf="@id/iv_color_04"
 	                android:background="@color/color_05" />
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_06"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
@@ -333,20 +333,20 @@
 	            android:layout_below="@id/rl_content_03"
 	            android:padding="5dp" >
 			    
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_07"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
 	                android:layout_alignParentLeft="true"
 	                android:background="@color/color_07" />
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_08"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
 	                android:layout_marginLeft="@dimen/color_block_width_seperator"
             		android:layout_toRightOf="@id/iv_color_07"
 	                android:background="@color/color_08" />
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_09"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
@@ -363,20 +363,20 @@
 	            android:layout_below="@id/rl_content_04"
 	            android:padding="5dp" >
 			    
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_10"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
 	                android:layout_alignParentLeft="true"
 	                android:background="@color/color_10" />
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_11"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
 	                android:layout_marginLeft="@dimen/color_block_width_seperator"
             		android:layout_toRightOf="@id/iv_color_10"
 	                android:background="@color/color_11" />
-	            <ImageView
+	            <TextView
 	                android:id="@+id/iv_color_12"
 	                android:layout_width="@dimen/color_block_width"
 	                android:layout_height="@dimen/color_block_height"
