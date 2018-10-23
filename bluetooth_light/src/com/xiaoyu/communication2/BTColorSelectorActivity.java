@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,7 +28,7 @@ public class BTColorSelectorActivity  extends Activity
 	
 	private ImageView iv_bluetooth_mode;
 	private ImageView iv_ok;
-	private ImageView iv_show;
+	private TextView iv_show;
 	
 	private ImageView iv_color_01;
 	private ImageView iv_color_02;
@@ -50,7 +51,7 @@ public class BTColorSelectorActivity  extends Activity
 	
 	private ColorPickerView cp_colorpicker;
 	
-	int i_bluetooth_mode = 0;		// 0: ����ģʽ�� 1�� ����ģʽ
+	int i_bluetooth_mode = 0;		// 0: 跳变模式， 1： 渐变模式
 	int value_red = 0;
 	int value_green = 0;
 	int value_blue = 0;
@@ -83,7 +84,8 @@ public class BTColorSelectorActivity  extends Activity
 		updateUI();
 	}
 	
-	@SuppressLint("ResourceAsColor") 
+	@SuppressWarnings("deprecation")
+	@SuppressLint({ "ResourceAsColor", "NewApi" }) 
 	private void updateUI() {
 		String[] cmds = str_color_info.split(",");
 		if (cmds.length < 5)
@@ -95,8 +97,10 @@ public class BTColorSelectorActivity  extends Activity
 		} else {
 //			int count = Integer.valueOf(cmds[1]);
 			int count = array_color.size();
+			
+			int colors[] = new int[count];
 			for (int i = 0; i < array_color_int.size(); i++) {
-				
+				colors[i] = array_color_int.get(i);
 			}
 			
 //			String color = "#" + array_color.get(count- 1);
@@ -106,14 +110,44 @@ public class BTColorSelectorActivity  extends Activity
 			int red = Color.red(now_color);
 			int green = Color.green(now_color);
 			int blue = Color.blue(now_color);
-			iv_show.setBackgroundColor(Color.rgb(red, green, blue));
+			
+
+			int strokeWidth = 1;     // 1dp 边框宽度
+			int roundRadius = 5;     // 5dp 圆角半径
+			int strokeColor = Color.parseColor("#00FF00");//边框颜色
+			int fillColor = now_color; //内部填充颜色
+			
+			GradientDrawable gd = new GradientDrawable();//创建drawable
+			gd.setCornerRadius(roundRadius);
+			gd.setStroke(strokeWidth, strokeColor);
+			if (count == 1) {
+				gd.setColor(fillColor);
+				gd.setGradientType(GradientDrawable.RECTANGLE);
+				iv_show.setBackgroundDrawable(gd);
+			} else {
+			
+				// GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+				gd.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+				gd.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+				gd.setColors(colors);
+				iv_show.setBackgroundDrawable(gd);
+			
+//				GradientDrawable myGrad = (GradientDrawable)iv_show.getBackground();
+//				myGrad.setColor (now_color);
+//				iv_show.setBackgroundDrawable(myGrad);
+//			
+//				GradientDrawable.Orientation[] orientations;
+//				GradientDrawable myGrad = (GradientDrawable) iv_show.getBackground();
+//				myGrad.setLevel(10000);
+//		        orientations = GradientDrawable.Orientation.values();
+			}
 		}
 	}
 	
 	private void initView() {
 	    iv_bluetooth_mode = (ImageView) findViewById(R.id.iv_bluetooth_mode);
 		iv_ok = (ImageView) findViewById(R.id.iv_ok);
-		iv_show = (ImageView) findViewById(R.id.iv_show);
+		iv_show = (TextView) findViewById(R.id.iv_show);
 		
 		iv_color_01 = (ImageView) findViewById(R.id.iv_color_01);
 		iv_color_02 = (ImageView) findViewById(R.id.iv_color_02);
@@ -294,7 +328,7 @@ public class BTColorSelectorActivity  extends Activity
 	private boolean setImageViewBackgroundColor(ImageView iv) {
 		Drawable background = iv.getBackground();
 		
-		// background ���� color �� Drawable, ����ֿ�ȡֵ
+		// background 包括 color 和 Drawable, 这里分开取值
         if (background instanceof ColorDrawable) {
             ColorDrawable colordDrawable = (ColorDrawable) background;
             int color = colordDrawable.getColor();
