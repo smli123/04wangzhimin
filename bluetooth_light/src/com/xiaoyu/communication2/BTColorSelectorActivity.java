@@ -2,6 +2,8 @@ package com.xiaoyu.communication2;
 
 import java.util.ArrayList;
 import com.xiaoyu.utils.ColorPickerView;
+import com.xiaoyu.utils.PubDefine;
+
 import android.R.array;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -109,16 +111,12 @@ public class BTColorSelectorActivity  extends Activity
 				colors[i] = Color.rgb(red, green, blue);
 			}
 			
-			int strokeWidth = 1;     						// 1dp 边框宽度
-			int roundRadius = 5;     						// 5dp 圆角半径
-			int strokeColor = Color.parseColor("#00FF00");	//边框颜色
-			int fillColor = Color.rgb(red, green, blue); 	//内部填充颜色
-			
-			GradientDrawable gd = new GradientDrawable();	//创建drawable
-			gd.setCornerRadius(roundRadius);
-			gd.setStroke(strokeWidth, strokeColor);
+			//创建drawable
+			GradientDrawable gd = new GradientDrawable();
+			gd.setCornerRadius(PubDefine.ROUND_RADIUS);
+			gd.setStroke(PubDefine.STROKE_WIDTH, PubDefine.STROKE_COLOR);
 			if (count == 1) {
-				gd.setColor(fillColor);
+				gd.setColor(Color.rgb(red, green, blue));
 				gd.setGradientType(GradientDrawable.RECTANGLE);
 			} else {
 				gd.setGradientType(GradientDrawable.LINEAR_GRADIENT);

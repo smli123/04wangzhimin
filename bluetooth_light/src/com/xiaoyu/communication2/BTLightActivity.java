@@ -38,6 +38,7 @@ import com.xiaoyu.bluetooth.BTClient;
 import com.xiaoyu.bluetooth.BTManage;
 import com.xiaoyu.bluetooth.BTServer;
 import com.xiaoyu.bluetooth.BluetoothMsg;
+import com.xiaoyu.utils.PubDefine;
 
 public class BTLightActivity extends Activity implements OnClickListener, SeekBar.OnSeekBarChangeListener {
 	private Context mContext;
@@ -91,7 +92,9 @@ public class BTLightActivity extends Activity implements OnClickListener, SeekBa
     
 	ArrayList<String> array_color = new ArrayList<String>();
     
-    private String[] str_color_info = new String[12];
+    private String[] str_color_info = new String[12];	
+    // String Format: PLAY_POS, LIGHT_POS, FLASH_POS, BLUETOOTH_MODE,COUNT,[r,g,b,...]
+    // 字符串格式:   	  播放值，		灯的亮度值，	   闪烁值，		  蓝牙模式，			 个数，		[RGB值]
     
 	private SharedPreferences mSharedPreferences;
 	private SharedPreferences.Editor editor;
@@ -411,25 +414,19 @@ public class BTLightActivity extends Activity implements OnClickListener, SeekBa
 				colors[i] = Color.rgb(red, green, blue);
 			}
 			
-			int strokeWidth = 1;     						// 1dp 边框宽度
-			int roundRadius = 5;     						// 5dp 圆角半径
-			int strokeColor = Color.parseColor("#00FF00");	//边框颜色
-			int fillColor = Color.rgb(red, green, blue); 	//内部填充颜色
-			
-			GradientDrawable gd = new GradientDrawable();	//创建drawable
-			gd.setCornerRadius(roundRadius);
-			gd.setStroke(strokeWidth, strokeColor);
+			//创建drawable
+			GradientDrawable gd = new GradientDrawable();
+			gd.setCornerRadius(PubDefine.ROUND_RADIUS);
+			gd.setStroke(PubDefine.STROKE_WIDTH, PubDefine.STROKE_COLOR);
 			if (count == 1) {
-				gd.setColor(fillColor);
+				gd.setColor(Color.rgb(red, green, blue));
 				gd.setGradientType(GradientDrawable.RECTANGLE);
-				iv_color.setBackgroundDrawable(gd);
-//				iv_color.setBackgroundColor(Color.rgb(red, green, blue));
 			} else {
 				gd.setGradientType(GradientDrawable.LINEAR_GRADIENT);
 				gd.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
 				gd.setColors(colors);
-				iv_color.setBackgroundDrawable(gd);
 			}
+			iv_color.setBackgroundDrawable(gd);
 		}
 	}
 	 
