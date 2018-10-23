@@ -100,7 +100,12 @@ public class BTColorSelectorActivity  extends Activity
 			
 			int colors[] = new int[count];
 			for (int i = 0; i < array_color_int.size(); i++) {
-				colors[i] = array_color_int.get(i);
+				int now_color = array_color_int.get(i);
+				int red = Color.red(now_color);
+				int green = Color.green(now_color);
+				int blue = Color.blue(now_color);
+				
+				colors[i] = Color.rgb(red, green, blue);
 			}
 			
 //			String color = "#" + array_color.get(count- 1);
@@ -123,7 +128,7 @@ public class BTColorSelectorActivity  extends Activity
 			if (count == 1) {
 				gd.setColor(fillColor);
 				gd.setGradientType(GradientDrawable.RECTANGLE);
-				iv_show.setBackgroundDrawable(gd);
+				iv_show.setBackgroundColor(Color.rgb(red, green, blue));
 			} else {
 			
 				// GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
@@ -282,6 +287,7 @@ public class BTColorSelectorActivity  extends Activity
             finish();
 			break;
 		case R.id.iv_show:
+			array_color_int.clear();
 			array_color.clear();
 			genStringCommand();
 			updateUI();
@@ -369,7 +375,7 @@ public class BTColorSelectorActivity  extends Activity
 				array_color.add(value);
 				array_color_int.add(col);
 				
-				if (i == count + 1) {
+				if (i == (count + 4) ) {
 					value_red = Color.red(col);
 					value_green = Color.green(col);
 					value_blue = Color.blue(col);
